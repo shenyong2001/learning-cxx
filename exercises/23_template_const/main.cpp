@@ -9,8 +9,11 @@ struct Tensor {
     T *data;
 
     Tensor(unsigned int const shape_[N]) {
+        std::memcpy(shape, shape_, N * sizeof(unsigned int));
         unsigned int size = 1;
-        // TODO: 填入正确的 shape 并计算 size
+        for (unsigned int i = 0; i < N; ++i) {
+            size *= shape[i];
+        }
         data = new T[size];
         std::memset(data, 0, size * sizeof(T));
     }
@@ -35,6 +38,11 @@ private:
         for (unsigned int i = 0; i < N; ++i) {
             ASSERT(indices[i] < shape[i], "Invalid index");
             // TODO: 计算 index
+            unsigned int stride = 1;
+            for (unsigned int j = i + 1; j < N; ++j) {
+                stride *= shape[j];
+            }
+            index += indices[i] * stride;
         }
         return index;
     }
