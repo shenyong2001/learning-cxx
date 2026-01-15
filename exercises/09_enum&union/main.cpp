@@ -37,8 +37,13 @@ ColorEnum convert_by_pun(Color c) {
 
     TypePun pun;
     // TODO: 补全类型双关转换
+    pun.c = c;
 
     return pun.e;
+}
+
+ColorEnum convert_by_static_cast(Color c) {
+    return static_cast<ColorEnum>(c);
 }
 
 int main(int argc, char **argv) {
@@ -46,5 +51,10 @@ int main(int argc, char **argv) {
     ASSERT(convert_by_pun(Color::Green) == COLOR_GREEN, "Type punning conversion");
     ASSERT(convert_by_pun(Color::Yellow) == COLOR_YELLOW, "Type punning conversion");
     ASSERT(convert_by_pun(Color::Blue) == COLOR_BLUE, "Type punning conversion");
+
+    ASSERT(convert_by_static_cast(Color::Red) == COLOR_RED, "static_cast conversion");
+    ASSERT(convert_by_static_cast(Color::Green) == COLOR_GREEN, "static_cast conversion");
+    ASSERT(convert_by_static_cast(Color::Yellow) == COLOR_YELLOW, "static_cast conversion");
+    ASSERT(convert_by_static_cast(Color::Blue) == COLOR_BLUE, "static_cast conversion");
     return 0;
 }
